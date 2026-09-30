@@ -6,7 +6,7 @@ import org.example.retail_inventory_managment.dto.requestDTO.RegisterRequest;
 import org.example.retail_inventory_managment.dto.requestDTO.UserUpdateRequest;
 import org.example.retail_inventory_managment.dto.resposneDTO.LoginResponse;
 import org.example.retail_inventory_managment.dto.resposneDTO.UserResponse;
-import org.example.retail_inventory_managment.service.UserServiceImpl;
+import org.example.retail_inventory_managment.service.Implementation.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
+        
         return ResponseEntity.ok(userService.login(loginRequest));
     }
 
@@ -37,7 +38,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
 
     }
-
 
     @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> getAllUsers(){

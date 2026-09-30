@@ -1,5 +1,6 @@
 package org.example.retail_inventory_managment.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.retail_inventory_managment.security.AuthenticationFilter;
 import org.example.retail_inventory_managment.security.CustomUserDetailsService;
@@ -44,10 +45,16 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-
-                .authenticationProvider(
-                        authenticationProvider()
-                ).authenticationProvider(authenticationProvider())
+            .authenticationProvider(authenticationProvider())
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write(
+                                    "{\"message\":\"User account is inactive or authentication failed\"}"
+                            );
+                        })
+                )
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

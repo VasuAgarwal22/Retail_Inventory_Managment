@@ -1,11 +1,10 @@
-package org.example.retail_inventory_managment.service;
+package org.example.retail_inventory_managment.service.Interfaces;
 
 import org.example.retail_inventory_managment.dto.requestDTO.LoginRequest;
 import org.example.retail_inventory_managment.dto.requestDTO.RegisterRequest;
 import org.example.retail_inventory_managment.dto.requestDTO.UserUpdateRequest;
 import org.example.retail_inventory_managment.dto.resposneDTO.LoginResponse;
 import org.example.retail_inventory_managment.dto.resposneDTO.UserResponse;
-import org.example.retail_inventory_managment.entity.User;
 
 import java.util.List;
 

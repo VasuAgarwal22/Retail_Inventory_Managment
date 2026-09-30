@@ -4,7 +4,7 @@ public enum RoleName {
     ADMIN,
     WAREHOUSE_MANAGER,
     STORE_STAFF,
-    PROCUREMENT,
+    PROCUREMENT, // manages the acquisition of good and service
     VIEWER
 }
 

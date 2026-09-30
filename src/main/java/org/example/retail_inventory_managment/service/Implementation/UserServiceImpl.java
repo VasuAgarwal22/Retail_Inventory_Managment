@@ -1,4 +1,4 @@
-package org.example.retail_inventory_managment.service;
+package org.example.retail_inventory_managment.service.Implementation;
 
 import org.example.retail_inventory_managment.dto.requestDTO.LoginRequest;
 import org.example.retail_inventory_managment.dto.requestDTO.RegisterRequest;
@@ -10,11 +10,11 @@ import org.example.retail_inventory_managment.entity.User;
 import org.example.retail_inventory_managment.repository.UserRepository;
 import org.example.retail_inventory_managment.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.example.retail_inventory_managment.service.Interfaces.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService{
     public void deactivateUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("Not found"));
         user.setActive(false);
+        userRepository.save(user);
     }
 
     private UserResponse convertToResponse(User user) {
