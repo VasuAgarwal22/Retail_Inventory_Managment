@@ -27,6 +27,8 @@ public class Warehouse {
     private String code;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private WarehouseType type;
 
     @Embedded
@@ -34,8 +36,5 @@ public class Warehouse {
 
     @Column(nullable = false)
     private boolean active = true;
-
-    @OneToMany(mappedBy = "warehouse")
-    private List<StorageLocation> storageLocations = new ArrayList<>();
 
 }

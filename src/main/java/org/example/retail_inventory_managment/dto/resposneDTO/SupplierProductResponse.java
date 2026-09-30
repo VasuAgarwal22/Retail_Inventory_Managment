@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,10 +14,12 @@ import java.math.BigDecimal;
 public class SupplierProductResponse {
 
     private Long id;
+
     private Long supplierId;
-    private String supplierName;
+
     private Long productId;
-    private String productName;
+
     private BigDecimal unitCost;
+
     private Integer moq;
 }

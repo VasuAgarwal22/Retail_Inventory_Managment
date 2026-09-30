@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.retail_inventory_managment.enums.MovementType;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,13 +15,24 @@ import org.example.retail_inventory_managment.enums.MovementType;
 public class StockMovementResponse {
 
     private Long id;
+
     private Long productId;
+
     private Long warehouseId;
+
     private MovementType movementType;
+
     private Integer quantity;
+
     private Integer balanceAfter;
+
     private String referenceType;
+
     private Long referenceId;
+
     private String reason;
 
+    private Long performedBy;
+
+    private LocalDateTime occurredAt;
 }

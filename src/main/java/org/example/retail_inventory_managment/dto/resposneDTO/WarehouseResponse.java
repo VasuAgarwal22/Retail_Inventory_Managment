@@ -15,6 +15,7 @@ public class WarehouseResponse {
 
     private Long id;
     private String code;
+    private String name;
     private WarehouseType type;
     private Address address;
     private boolean active;

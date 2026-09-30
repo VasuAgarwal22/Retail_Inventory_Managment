@@ -1,6 +1,5 @@
 package org.example.retail_inventory_managment.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,23 +21,31 @@ public class StockMovement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "warehouse_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private MovementType movementType;
 
+    @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false)
     private Integer balanceAfter;
+
     private String referenceType;
+
     private Long referenceId;
+
     private String reason;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "performed_by")
     private User performedBy;
 

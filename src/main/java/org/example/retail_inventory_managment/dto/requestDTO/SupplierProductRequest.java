@@ -14,8 +14,10 @@ import java.math.BigDecimal;
 public class SupplierProductRequest {
 
     private Long supplierId;
-    private Long productId;
-    private BigDecimal unitCost;
-    private Integer moq;
 
+    private Long productId;
+
+    private BigDecimal unitCost;
+
+    private Integer moq;
 }

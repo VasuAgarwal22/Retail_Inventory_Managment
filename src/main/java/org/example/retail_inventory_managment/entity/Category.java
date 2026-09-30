@@ -22,18 +22,6 @@ public class Category {
     private Long id;
     private String name;
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Category parent;
-
-//    it will be used only when it is requested like get all children of one category
-
-    @OneToMany(mappedBy = "parent")
-    private List<Category> children = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> products = new ArrayList<>();
-
+    private boolean active;
 
 }

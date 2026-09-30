@@ -14,12 +14,18 @@ import java.math.BigDecimal;
 public class SupplierResponse {
 
     private Long id;
-    private String code;
-    private String name;
-    private String email;
-    private String phoneNo;
-    private String paymentTerms;
-    private Integer leadTimeDays;
-    private BigDecimal rating;
 
+    private String code;
+
+    private String name;
+
+    private String email;
+
+    private String phoneNo;
+
+    private String paymentTerms;
+
+    private Integer leadTimeDays;
+
+    private BigDecimal rating;
 }

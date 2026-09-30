@@ -1,5 +1,4 @@
 package org.example.retail_inventory_managment.controller;
-
 import lombok.RequiredArgsConstructor;
 import org.example.retail_inventory_managment.dto.requestDTO.ProductRequest;
 import org.example.retail_inventory_managment.dto.resposneDTO.ProductResponse;
@@ -29,7 +28,7 @@ public class ProductController {
             return ResponseEntity.ok(productIntService.getAllProducts());
         }
 
-        @PutMapping("/update/{id}")
+        @PutMapping("/updateProduct/{id}")
         public ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody ProductRequest request){
             return ResponseEntity.ok(productIntService.updateProduct(id,request));
         }
@@ -39,5 +38,4 @@ public class ProductController {
             productIntService.deactivateProduct(id);
             return ResponseEntity.ok("PRODUCT DEACTIVATED SUCCESSFULLY");
         }
-
 }
