@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.retail_inventory_managment.dto.requestDTO.ProductRequest;
 import org.example.retail_inventory_managment.dto.resposneDTO.ProductResponse;
 import org.example.retail_inventory_managment.dto.resposneDTO.ProductVariantResponse;
-import org.example.retail_inventory_managment.entity.Brand;
 import org.example.retail_inventory_managment.entity.Category;
 import org.example.retail_inventory_managment.entity.Product;
 import org.example.retail_inventory_managment.entity.ProductVariant;
-import org.example.retail_inventory_managment.repository.BrandRepository;
 import org.example.retail_inventory_managment.repository.CategoryRepository;
 import org.example.retail_inventory_managment.repository.ProductRepository;
 import org.example.retail_inventory_managment.service.Interfaces.ProductInt;
@@ -18,11 +16,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductIntServiceImpl implements ProductInt {
+public class ProductIntService implements ProductInt {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final BrandRepository brandRepository;
 
     @Override
     public ProductResponse createProduct(ProductRequest request) {
@@ -53,13 +50,12 @@ public class ProductIntServiceImpl implements ProductInt {
     public ProductResponse updateProduct(Long id, ProductRequest request) {
         Product product = productRepository.findById(id).orElseThrow(()-> new RuntimeException("No product find with this id"));
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(()-> new RuntimeException("Category not found"));
-        Brand brand = brandRepository.findById(request.getBrandId()).orElseThrow(()-> new RuntimeException("Brand not found"));
+
         product.setSku(request.getSku());
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setBasePrice(request.getBasePrice());
         product.setCategory(category);
-        product.setBrand(brand);
         Product updatedProduct = productRepository.save(product);
         return convertToResponse(updatedProduct);
 
@@ -75,7 +71,6 @@ public class ProductIntServiceImpl implements ProductInt {
 
     private Product convertToEntity(ProductRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(()-> new RuntimeException("No category exist"));
-        Brand brand = brandRepository.findById(request.getBrandId()).orElseThrow(()-> new RuntimeException("No brand exist"));
         return Product.builder()
                 .sku(request.getSku())
                 .name(request.getName())
@@ -83,7 +78,6 @@ public class ProductIntServiceImpl implements ProductInt {
                 .basePrice(request.getBasePrice())
                 .active(true)
                 .category(category)
-                .brand(brand)
                 .build();
     }
 //    Entity to response
@@ -97,7 +91,6 @@ public class ProductIntServiceImpl implements ProductInt {
                 .basePrice(product.getBasePrice())
                 .active(product.isActive())
                 .category(product.getCategory())
-                .brand(product.getBrand())
                 .variant(product.getVariants().stream().map(this::convertToVariantResponse).toList()).build();
 
 

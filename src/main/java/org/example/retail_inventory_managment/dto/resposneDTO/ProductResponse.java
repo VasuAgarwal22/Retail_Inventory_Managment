@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.retail_inventory_managment.entity.Brand;
 import org.example.retail_inventory_managment.entity.Category;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,8 +25,6 @@ public class ProductResponse {
     private boolean active;
 
     private Category category;
-
-    private Brand brand;
 
     private List<ProductVariantResponse> variant;
 

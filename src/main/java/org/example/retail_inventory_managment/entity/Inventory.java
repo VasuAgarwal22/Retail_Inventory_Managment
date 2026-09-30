@@ -28,10 +28,6 @@ public class Inventory {
     @JoinColumn(name = "warehouse_id",nullable = false)
     private Warehouse warehouse;
 
-    @ManyToOne
-    @JoinColumn(name = "storage_location_id",nullable = false)
-    private StorageLocation storageLocation;
-
     private Integer quantityOnHand = 0;
     private Integer quantityReserved =0;
     private Integer quantityIncoming = 0;

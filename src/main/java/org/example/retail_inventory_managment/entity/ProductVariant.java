@@ -27,11 +27,12 @@ public class ProductVariant {
     @Column(nullable = false)
     private String name;
 
-    private String attributes;
+    private String description;
 
+    private boolean active;
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

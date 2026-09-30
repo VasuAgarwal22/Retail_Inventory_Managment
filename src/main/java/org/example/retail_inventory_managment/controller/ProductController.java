@@ -3,17 +3,16 @@ package org.example.retail_inventory_managment.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.retail_inventory_managment.dto.requestDTO.ProductRequest;
 import org.example.retail_inventory_managment.dto.resposneDTO.ProductResponse;
-import org.example.retail_inventory_managment.service.Implementation.ProductIntServiceImpl;
+import org.example.retail_inventory_managment.service.Implementation.ProductIntService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductIntServiceImpl productIntService;
+    private final ProductIntService productIntService;
 
     @PostMapping("/create_Product")
         public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest request){
@@ -35,9 +34,10 @@ public class ProductController {
             return ResponseEntity.ok(productIntService.updateProduct(id,request));
         }
 
-        @GetMapping("/deactivate_pro/{id}")
+        @PatchMapping("/{id}/deactivate_pro")
         public ResponseEntity<String> deactivate(@PathVariable Long id){
             productIntService.deactivateProduct(id);
             return ResponseEntity.ok("PRODUCT DEACTIVATED SUCCESSFULLY");
         }
+
 }

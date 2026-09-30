@@ -15,8 +15,10 @@ public class ProductVariantResponse {
 
     private Long id;
     private String sku;
-    private String variantName;
+    private String name;
     private BigDecimal price;
     private boolean active;
+    private Long productId;
+
 
 }
