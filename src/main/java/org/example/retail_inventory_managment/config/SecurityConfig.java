@@ -30,6 +30,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
+                .cors(cors -> {})
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
@@ -40,12 +42,17 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/api/auth/register",
-                                "/api/auth/login"
+                                "/api/auth/login",
+                                "/error"
                         ).permitAll()
+
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+
+                        .requestMatchers("/api/auth/deactivate/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
-            .authenticationProvider(authenticationProvider())
+                .authenticationProvider(authenticationProvider())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

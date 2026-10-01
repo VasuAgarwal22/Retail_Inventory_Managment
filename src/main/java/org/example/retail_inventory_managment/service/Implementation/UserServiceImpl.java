@@ -7,6 +7,8 @@ import org.example.retail_inventory_managment.dto.resposneDTO.LoginResponse;
 import org.example.retail_inventory_managment.dto.resposneDTO.UserResponse;
 import org.example.retail_inventory_managment.entity.Role;
 import org.example.retail_inventory_managment.entity.User;
+import org.example.retail_inventory_managment.enums.RoleName;
+import org.example.retail_inventory_managment.repository.RoleRepository;
 import org.example.retail_inventory_managment.repository.UserRepository;
 import org.example.retail_inventory_managment.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -95,12 +99,21 @@ public class UserServiceImpl implements UserService {
     }
 
     private User convertToEntity(RegisterRequest request){
+        RoleName selectedRole = request.getRoleName() != null
+                ? request.getRoleName()
+                : RoleName.STORE_STAFF;
+        if (selectedRole == RoleName.ADMIN && userRepository.count() > 0) {
+            throw new RuntimeException("ADMIN role can only be used for the initial administrator account");
+        }
+        Role role = roleRepository.findByRoleName(selectedRole)
+                .orElseGet(() -> roleRepository.save(Role.builder().roleName(selectedRole).build()));
         return User.builder()
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNo(request.getPhoneNo())
+                .roles(Set.of(role))
                 .build();
     }
 }

@@ -2,11 +2,12 @@ import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Lock, Mail, Phone, User } from 'lucide-angular';
 import { AuthService } from '../../core/auth.service';
+import { RoleName } from '../../core/api.service';
 import { Alert } from '../ui/alert';
 import { Button } from '../ui/button';
 import { InputField } from '../ui/input-field';
 
-type Field = 'firstName' | 'lastName' | 'email' | 'phoneNo' | 'password' | 'confirmPassword';
+type Field = 'firstName' | 'lastName' | 'email' | 'phoneNo' | 'password' | 'confirmPassword' | 'roleName';
 
 @Component({
   selector: 'app-register-form',
@@ -60,6 +61,14 @@ type Field = 'firstName' | 'lastName' | 'email' | 'phoneNo' | 'password' | 'conf
         formControlName="phoneNo"
         [error]="errors().phoneNo"
       />
+
+      <div>
+        <label for="reg-role" class="mb-1.5 block text-sm font-medium text-slate-700">Role</label>
+        <select id="reg-role" formControlName="roleName" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+          @for (role of roles; track role) { <option [ngValue]="role">{{ role.replaceAll('_', ' ') }}</option> }
+        </select>
+        <p class="mt-1 text-xs text-slate-500">Only administrators can deactivate users.</p>
+      </div>
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <app-input-field
@@ -120,7 +129,9 @@ export class RegisterForm {
     phoneNo: '',
     password: '',
     confirmPassword: '',
+    roleName: 'STORE_STAFF' as RoleName,
   });
+  protected readonly roles: RoleName[] = ['ADMIN', 'WAREHOUSE_MANAGER', 'STORE_STAFF', 'PROCUREMENT', 'VIEWER'];
   protected readonly errors = signal<Partial<Record<Field, string>>>({});
   protected readonly apiError = signal('');
   protected readonly loading = signal(false);
@@ -152,6 +163,7 @@ export class RegisterForm {
         email: f.email.trim(),
         phoneNo: f.phoneNo.trim(),
         password: f.password,
+        roleName: f.roleName,
       });
       this.registered.emit(f.email.trim());
     } catch (err) {

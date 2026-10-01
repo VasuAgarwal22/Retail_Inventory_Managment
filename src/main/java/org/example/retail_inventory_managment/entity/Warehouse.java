@@ -28,7 +28,7 @@ public class Warehouse {
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private WarehouseType type;
 
     @Embedded
